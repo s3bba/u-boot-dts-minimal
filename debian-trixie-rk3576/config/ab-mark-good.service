@@ -1,0 +1,12 @@
+[Unit]
+Description=Mark active A/B slot as healthy
+After=multi-user.target
+Wants=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 20
+ExecStart=/usr/local/sbin/mark-boot-success
+
+[Install]
+WantedBy=multi-user.target

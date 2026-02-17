@@ -1,0 +1,5 @@
+/dev/root / ext4 defaults,noatime,errors=remount-ro 0 1
+PARTLABEL=config /config ext4 defaults,noatime,nofail 0 2
+PARTLABEL=logs /var/log ext4 defaults,noatime,nofail 0 2
+PARTLABEL=data /data ext4 defaults,noatime,nofail 0 2
+tmpfs /tmp tmpfs nosuid,nodev,mode=1777 0 0
