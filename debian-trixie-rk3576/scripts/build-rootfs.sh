@@ -149,7 +149,12 @@ chroot_run() {
     fi
 }
 
-chroot_run /debootstrap/debootstrap --second-stage
+if [[ "${USE_QEMU}" -eq 1 ]]; then
+    # /debootstrap/debootstrap is a shell script, so run it via /bin/sh under qemu.
+    chroot_run /bin/sh /debootstrap/debootstrap --second-stage
+else
+    chroot_run /debootstrap/debootstrap --second-stage
+fi
 
 if [[ ! -f "${APT_SOURCES}" ]]; then
     echo "APT sources file not found: ${APT_SOURCES}" >&2

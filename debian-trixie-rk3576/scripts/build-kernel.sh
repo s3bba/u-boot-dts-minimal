@@ -9,7 +9,7 @@ KERNEL_BRANCH="develop-6.1"
 KERNEL_SRC="${PROJECT_DIR}/work/kernel"
 KERNEL_BUILD="${PROJECT_DIR}/out/kernel-build"
 KERNEL_OUT="${PROJECT_DIR}/out/kernel"
-DEFCONFIG="rockchip_defconfig"
+DEFCONFIG="rockchip_linux_defconfig"
 DTB_TARGET="rockchip/rk3576-evb1-v10.dtb"
 BOARD_DTS_OVERRIDE=""
 CROSS_COMPILE="aarch64-linux-gnu-"
@@ -99,6 +99,12 @@ if [[ ! -d "${KERNEL_SRC}/.git" ]]; then
 else
     git -C "${KERNEL_SRC}" fetch --depth 1 origin "${KERNEL_BRANCH}"
     git -C "${KERNEL_SRC}" checkout -q FETCH_HEAD
+fi
+
+if [[ ! -f "${KERNEL_SRC}/arch/arm64/configs/${DEFCONFIG}" ]]; then
+    echo "Kernel defconfig not found: arch/arm64/configs/${DEFCONFIG}" >&2
+    echo "For rockchip-linux/kernel develop-6.1 use --defconfig rockchip_linux_defconfig" >&2
+    exit 1
 fi
 
 if [[ -n "${BOARD_DTS_OVERRIDE}" ]]; then
